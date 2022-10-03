@@ -2,18 +2,14 @@ import RPi.GPIO as GPIO
 import time
 GPIO.setmode(GPIO.BCM)
 
-trigger = 23
-echo = 24
+trigger = 17
+echo = 27
 
 GPIO.setup(trigger,GPIO.OUT)
 GPIO.setup(echo,GPIO.IN)
 
-
 def get_distance():
     
-    GPIO.output(trigger, False)
-    time.sleep(2)
-
     #push trigger
     GPIO.output(trigger, True)
     time.sleep(0.00001)
@@ -34,5 +30,9 @@ def get_distance():
 
 
 while True:
+    GPIO.output(trigger, False)
+    time.sleep(1)
+    
     distance = get_distance()
     print ("Distance = %.1f cm" % distance)
+
