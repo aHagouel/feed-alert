@@ -38,17 +38,26 @@ client = phone.start_client()
 
 #6 hour grace period in seconds
 GRACE_PERIOD = 21600
+CONTAINER_LENGTH = 24
+ANOMALY = 5
 hourglass = time.time()
 alerted = False
+prev_distance = 24
 
 while True:
     GPIO.output(trigger, False)
-    time.sleep(1)
-    
+    time.sleep(2)
+   
     distance = get_distance()
     
-    #alert if we haven't in the last 6 hours
-    if distance >= 24:
+    #ignore any large changes in signal, e.g. when opening lid / feeding for an extended period of time 
+    #change in food size is 1 cup every 12 hours, which should be less than 5cm between any two readings
+    #don't care about distances becoming much smaller than 24cm
+    if distance - prev_distance > ANOMALY:
+        continue
+    
+    #alert if feed distance container length and we haven't in the last 6 hours
+    elif distance >= CONTAINER_LENGTH:
         time_now = time.time()
         
         #handle case where first alert is within grace period... prob a better way to do this
@@ -60,6 +69,8 @@ while True:
         elif (hourglass - time_now) >= GRACE_PERIOD:
             phone.send_alert_msg(client)
             hourglass = time_now
+            
+    prev_distance = distance
     
     print ("Distance = %.1f cm" % distance)
 
