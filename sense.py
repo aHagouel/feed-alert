@@ -41,36 +41,45 @@ GRACE_PERIOD = 21600
 CONTAINER_LENGTH = 24
 ANOMALY = 5
 hourglass = time.time()
+alerts = 0
 alerted = False
 prev_distance = 24
 
 while True:
     GPIO.output(trigger, False)
-    time.sleep(2)
+    time.sleep(3)
    
     distance = get_distance()
     
     #ignore any large changes in signal, e.g. when opening lid / feeding for an extended period of time 
     #change in food size is 1 cup every 12 hours, which should be less than 5cm between any two readings
     #don't care about distances becoming much smaller than 24cm
-    if distance - prev_distance > ANOMALY:
+    if (distance - prev_distance) > ANOMALY:
+        print('Anomaly detected: distance measured at ', distance ,'while previous distance measured at ', prev_distance, '. \n Skipping measurement')
         continue
     
     #alert if feed distance container length and we haven't in the last 6 hours
     elif distance >= CONTAINER_LENGTH:
         time_now = time.time()
+        time_since_last_alert = time_now - hourglass
         
         #handle case where first alert is within grace period... prob a better way to do this
         if alerted == False:
+            alerts += 1
+            print('Threshold passed with current distance of ', distance, 'and a previous distance of ', prev_distance, '. Alert count: ', alerts)
             phone.send_alert_msg(client)
             hourglass = time_now
             alerted = True
             
-        elif (hourglass - time_now) >= GRACE_PERIOD:
+        elif time_since_last_alert >= GRACE_PERIOD:
+            alerts += 1
+            print('Threshold passed with current distance of ', distance, 'and a previous distance of ', prev_distance, '. Previous alert: ', time_since_last_alert, 'Alert count: ', alerts)
             phone.send_alert_msg(client)
             hourglass = time_now
+            
+        elif time_since_last_alert <= GRACE_PERIOD:
+            print('Threshold above maximum distance but within grace period. No alert sent')
             
     prev_distance = distance
     
     print ("Distance = %.1f cm" % distance)
-
