@@ -38,16 +38,16 @@ client = phone.start_client()
 
 #6 hour grace period in seconds
 GRACE_PERIOD = 21600
-CONTAINER_LENGTH = 24
+CONTAINER_LENGTH = 30
 ANOMALY = 5
 hourglass = time.time()
 alerts = 0
 alerted = False
-prev_distance = 24
+prev_distance = 30
 
 while True:
     GPIO.output(trigger, False)
-    time.sleep(3)
+    time.sleep(2)
    
     distance = get_distance()
     
