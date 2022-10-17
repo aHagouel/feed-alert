@@ -29,7 +29,7 @@ Managing these issues seem pretty straightforward, right? Just fill the machine 
 - _Scale_ In Ecuador, it's not atypical to see a farm with 40, 8 hectare ponds (that's like 790 football fields) and farms typically have between 1.2 and 1.5 autofeeders per Ha. So, filling and ensuring over 480 machines are functioning across 790 football fields of water is definitely challenging. Some of the XL farms (think several of these Large farms managed by an organization) have "SWAT" teams for managing machiens and instructing farm personell.
 
 
-## What if we could always know how full an autofeeer was?
+## What if farmers could always know how full an autofeeer was?
   
 So what if we built a simple way to track the fill status of a bucket-like apparatus that floats on water? Having a clear signal of how much feed is in a specific hopper vs. how much feed is planned to be distributed can help shrimp farmers plan which machines will require topping off and quickly identify silent mechanical failures. This thing...
 
@@ -72,14 +72,14 @@ Ignoring the cost of the food bucket and prototype peripherals (breadboard, powe
 <TODO monday>
 
 
-# Caveats, especially if thinking of scale
+## Caveats, especially if thinking of scale
 - Requires manual calibration of hopper height to work
 - Power source is unclear 
 - Interent issues will delay alerting
 - Hacky error handling in my code, was just a proof of concept
 
 
-# Additional potential applications for shrimp farmers
+## Additional potential applications for shrimp farmers
 I got a lot of the below ideas when I stumbled on [FeedAlert](https://www.feedalert.co.uk/the-app) while looking for similar solutions. They also toooootally used the same name as this project!! 😉:
 - Notifications (this project)
 - Forecasts across all hoppers (to coordinate logistics)
