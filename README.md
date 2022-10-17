@@ -1,6 +1,6 @@
 # Are you an autofeeder half full or half empty kind of person?
 
-##Summary
+## Summary
 
 At xpertSea, I work to make Ecuadorian shrimp farmer's operations more productive and sustainable through technology. Recently we discovered that managing autofeeders -- semi-autonomous feeding buckets with mechanical dispensers -- is a critical task for a optimizing shrimp production and farmers rely on manual inspection of hopper fill status to debug and correct issues that may result in missed feed opportunities. This is a proof of concept that it may be possible to create more reliable alerting on hopper fill status using cheap hardware + iot.
 
@@ -33,26 +33,26 @@ Managing these issues seem pretty straightforward, right? Just fill the machine 
   
 So what if we built a simple way to track the fill status of a bucket-like apparatus that floats on water? Having a clear signal of how much feed is in a specific hopper vs. how much feed is planned to be distributed can help shrimp farmers plan which machines will require topping off and quickly identify silent mechanical failures. This thing...
 
-###Must: 
+### Must: 
 - Notify user when a "hopper" is empty
 - Deliver notification through mobile
 - Be very cheap, ideally < $30
 - Be compatible with bottom-dispensing hoppers that float on water
 - Work in light & dark conditions
 
-###Should:
+### Should:
 - Notify user when feed has 1 week to empty
 - Not notify user when feed is being adjusted / filled
 
-###Could:
+### Could:
 - Calculate & track % full over time
 - Notify via WhatsApp (preferred communication protocol in Ecuador)
 
-###Won't:
+### Won't:
 - Work offline, assume connection possible rn
 
 
-##Solution
+## Solution
 The solution is fairly straightforward: use a distance sensor strapped to the top of a fake autofeeder hopper and send WhatsApp messages based on the distance of the feed to the sensor. 
 
 But first, say hi to Maui -- she's our shrimp for this project. She's not _actually_ a shrimp, but she does shrimp-like things like eat on a schedule and gets really upset if she isn't fed at the right time. If you squint, she actually looks like a shrimp, too. 
@@ -68,7 +68,7 @@ She's a good girl. Okay, back to the design, here it is:
 
 Ignoring the cost of the food bucket and prototype peripherals (breadboard, power source, jumper wires, etc.), the total cost of two key components was $10.95 USD before tax 🏄‍♂️.
 
-##Results
+## Results
 <TODO monday>
 
 
