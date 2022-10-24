@@ -3,13 +3,21 @@ import time
 import feed_me_through_the_phone as phone
 from twilio.rest import Client 
 
-GPIO.setmode(GPIO.BCM)
-
+#RaspberryPi config
 trigger = 17
 echo = 27
-
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(trigger,GPIO.OUT)
 GPIO.setup(echo,GPIO.IN)
+
+#Container & alerting config
+GRACE_PERIOD = 21600
+CONTAINER_LENGTH = 30
+CRITICAL = 0.01
+ANOMALY = 5
+
+#Start a Twilio / WhatsApp client
+client = phone.start_client()
 
 def get_distance():
     
@@ -32,14 +40,11 @@ def get_distance():
     return (pulse_duration * 34300) / 2
 
 
+def calculate_fullness(length=CONTAINER_LENGTH, distance):
+    return (1.0-(distance / length))
+    
 
-#Start a Twilio / WhatsApp client
-client = phone.start_client()
-
-#6 hour grace period in seconds
-GRACE_PERIOD = 21600
-CONTAINER_LENGTH = 30
-ANOMALY = 5
+#Execute alerting logic 
 hourglass = time.time()
 alerts = 0
 alerted = False
@@ -50,6 +55,7 @@ while True:
     time.sleep(2)
    
     distance = get_distance()
+    fullness = calculate_fullness(CONTAINER_LENGTH,distance)
     
     #ignore any large changes in signal, e.g. when opening lid / feeding for an extended period of time 
     #change in food size is 1 cup every 12 hours, which should be less than 5cm between any two readings
@@ -59,7 +65,7 @@ while True:
         continue
     
     #alert if feed distance container length and we haven't in the last 6 hours
-    elif distance >= CONTAINER_LENGTH:
+    elif fullness <= CRITICAL:
         time_now = time.time()
         time_since_last_alert = time_now - hourglass
         
@@ -82,4 +88,6 @@ while True:
             
     prev_distance = distance
     
-    print ("Distance = %.1f cm" % distance)
+    print ("Feed measured at", distance, "cm, representing a hopper that is ", fullness*100,"% full.")
+    
+    
