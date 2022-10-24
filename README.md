@@ -22,21 +22,25 @@ When autofeeders are implemented well, the results are dramatic: >30% improvemen
 
 Not really! We recently partnered with a farm to trial autofeeders and we quickly learned that these machines need specialized people on the farm constantly refilling, monitoring, and configuring the machines to ensure the shrimp get fed the amount they should be. 
 
-Two two main reasons that made dispensing feed from autofeeders difficult:
+There are three reasons why autofeeders may not distribute enough feed to the pond:
   1. Hoppers need to be constantly re-filled. Without food in the hopper, the machine can't feed the shrimp (DUH), and a hungry shrimp doesn't grow. Farm teams must ensure that there's enough feed by the pond for re-filling the next day and that feeders have sufficient feed for the upcoming feeding period. Farms sometimes offset this requirement by purchasing machines with larger feed carrying capacities.
-  2. Some part of the system may malfunction -- most commonly mechanical issues due to feed getting wet and clogging the mechanical dispenser or some reliabliity issues with the motors. Other issues included communication failures between the software / central units / autofeeders (internet can be really bad on these large and remote farms).
+  2. Bad configuration. After initial installation, this would typically be around feed quantity to distribute, especially as shrimp behavior changes. 
+  3. Some part of the system may malfunction -- most commonly mechanical issues due to feed getting wet and clogging the mechanical dispenser or some reliabliity issues with the motors. Other issues included communication failures between the software / central units / autofeeders (internet can be really bad on these large and remote farms).
   
 Managing these issues seems pretty straightforward, right? Just fill the machine and make sure the feed is going into the pond. Well, a few things make this complicated:
-- _Silent failures_ The software is telling you it's dispersing feed and that everything looks good but when you get to the machine the hopper is full. This typically happens with non detected mechanical failures. In our collaboration, these problems were always discovered when teams woke up to see hoppers full of feed (aka lost a day of feeding!!). These are the worst.
-- _Manual inspection required_ I'm not sure what the root cause is, but hopper fill status on the software was just not accurate with the brand we were seeing. Here's a view of the fill status of a hopper -- a binary empty / full signal that was sporadically on and off throghout the day. <TODO: Screenshot>.  
-- _Alerts...? Anyone?_ Few brands have made autofeeder calibration notifications rock solid. When non silent failures do arise, they tend to be poll-based alerts on desktop UIs, so unless you're watching the screen all day (some people's job on the farm is literally to do that), you'll miss it. 
-- _Scale_ In Ecuador, it's not atypical to see a farm with 40, 8 hectare ponds (that's like 790 football fields) and farms typically have between 1.2 and 1.5 autofeeders per Ha. So, filling and ensuring over 480 machines are functioning across 790 football fields of water is definitely challenging. Some of the XL farms (think several of these large farms managed by a single organization) have "SWAT" teams dedicated to managing machines and instructing farm personell.
+- *Silent failures* The software is telling you it's dispersing feed and that everything looks good but when you get to the machine the hopper is full. This typically happens with non detected mechanical failures. In our collaboration, these problems were always discovered when teams woke up to see hoppers full of feed (aka lost a day of feeding!!). These are the worst.
+- *Manual inspection required* I'm not sure what the root cause is, but hopper fill status on the software was just not accurate with the brand we were seeing. Here's a view of the fill status of a hopper -- a binary empty / full signal that was sporadically on and off throghout the day. <TODO: Screenshot>.  
+- *Alerts...? Anyone?* Few brands have made autofeeder calibration notifications rock solid. When non silent failures do arise, they tend to be poll-based alerts on desktop UIs, so unless you're watching the screen all day (some people's job on the farm is literally to do that), you'll miss it. 
+- *Scale* In Ecuador, it's not atypical to see a farm with 40, 8 hectare ponds (that's like 790 football fields) and farms typically have between 1.2 and 1.5 autofeeders per Ha. So, filling and ensuring over 480 machines are functioning across 790 football fields of water is definitely challenging. Some of the XL farms (think several of these large farms managed by a single organization) have "SWAT" teams dedicated to managing machines and instructing farm personell.
 
 By the way, this is just to make sure the machines are working. There are also significant impacts to managing the water quality & increased biomass in the pond due to increased feed & growth, but we're not focusing on that here.
 
-## What if farmers could always know how full an autofeeer was?
+## What if farmers could always know how full their autofeeders are?
   
-So what if we built a simple way to track the fill status of a bucket-like apparatus that floats on water? Having a clear signal of how much feed is in a specific hopper can help farmers estimate which machines will need to be refilled and when to help with feed logistics & ordering and quickly identify silent mechanical failures to prevent udnerfeeding. This thing...
+So what if we built a simple way to track the fill status of a bucket-like apparatus that floats on water? Having a clear signal of how much feed is in a specific hopper can help farmers estimate which machines will need to be refilled and when to help with feed logistics & ordering and quickly identify silent mechanical failures to prevent underfeeding. 
+  
+  
+I'm going to focus this proof of concept on the use case of alerting when an autofeeder needs to be refilled. It's not the most valuable to a farmer, but it's the simplest one to implement and proves whether we'll be able to estimate hopper fill status. This thing...
 
 ### Must: 
 - Estimate hopper fill status automatically
@@ -102,12 +106,14 @@ For the sake of prototyping I think it's safe to call it done here as we're able
 
 ## Additional potential applications for the shrimp industry
 
-- Notifications (this project)
-- Forecasts across all hoppers (to coordinate logistics)
-- Feed ordering automation (kind of like an Amazon Dash button, but for feed)
-- Reliability data (for autofeeder hardware companies)
+A constant signal on hopper feed status is interesting. Adding trends and integarting farmer feed data can open up a few new more interesting use cases as well:
+  
+- Notifications on interesting hopper fill status (this project)
+- Hopper fill status across all hoppers on a pond and farm to simplify feed fill logistics
+- Forecasting hopper fill status across the farm to automate feed planning and ordering (kind of like an Amazon Dash button, but for feed)
+- Creaet additional reliability data for autofeeder hardware companies
 
-These aren't really novel -- I stumbled upon [FeedAlert](https://www.feedalert.co.uk/the-app) while looking for similar solutions and they ipmlement   parallels with where this can be taken for shrimp autofeeders. They also toooootally used the same name as this project!! 😉:
+These aren't really novel -- I stumbled upon [FeedAlert](https://www.feedalert.co.uk/the-app) while looking for similar solutions and they have already implemented most of the concepts in traditional agriculture. They also toooootally used the same name as this project!! 😉
 
 
 
