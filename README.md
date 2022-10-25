@@ -72,7 +72,7 @@ First, say hi to my dog Maui -- she's our shrimp for this project. She's not _ac
 
 
 Okay, back to the design, here it is:
-<img width="1246" alt="image" src="https://user-images.githubusercontent.com/9829937/197424211-9d8b9bff-8873-443b-8885-f76094b20f46.png">
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/9829937/197865130-39510d9c-4a64-45f8-82ca-5f41f9c0a22e.png">
 
 
 1. Maui's food storage bucket was used to simulate an autofeeder's hopper as it stores food which empties at a somewhat predictable frequency and allows us to test for some scenarios. For those wondering, she eats Whole Hearted's Beef & Brown Rice recipe, but I should probably move to something better.
