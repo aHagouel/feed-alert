@@ -78,9 +78,9 @@ Okay, back to the design, here it is:
 
 1. Maui's food storage bucket was used to simulate an autofeeder's hopper as it stores food which empties at a somewhat predictable frequency and allows us to test for some scenarios. For those wondering, she eats Whole Hearted's Beef & Brown Rice recipe, but I should probably move to something better.
 
-2. A wifi-enabled [Raspberry Pi Pico W]** (https://www.adafruit.com/product/5544) was used to read responses on an ongoing basis from ...
-
-3. An [ultrasonic sensor](https://www.adafruit.com/product/3942?gclid=Cj0KCQjw166aBhDEARIsAMEyZh5hnZYPjSMhwL2mnJjwpT8mpTGLdO6UNkRYgl7pwaotRw5qHYf51pIaAuo1EALw_wcB) to make this work. I picked an ultrasonic sensor because unlike traditional silo weighting in agriculture which have their supports resting on scales, our machines float on water and adding scales to buoys seemed silly and complicated. Ultrasonic sensors work at night, seem accurate enough (farmers don't need to wait to refill or order feed when the last granule goes in), and are *super* cheap.
+2. An [ultrasonic sensor](https://www.adafruit.com/product/3942?gclid=Cj0KCQjw166aBhDEARIsAMEyZh5hnZYPjSMhwL2mnJjwpT8mpTGLdO6UNkRYgl7pwaotRw5qHYf51pIaAuo1EALw_wcB) detects how close the feed is to the top of the bucket. I picked an ultrasonic sensor because unlike traditional silo weighting in agriculture which have their supports resting on scales, our machines float on water and adding scales to buoys seemed silly and complicated. Ultrasonic sensors work at night, seem accurate enough (farmers don't need to wait to refill or order feed when the last granule goes in), and are *super* cheap.
+  
+3. A wifi-enabled [Raspberry Pi Pico W]** (https://www.adafruit.com/product/5544) was used to read responses & implement simple alerting & reporting rules.
 
 4. [Twilio](https://www.twilio.com/messaging/whatsapp) was used to test out alerting, and they had WhatsApp integration so that was great!
 
