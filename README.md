@@ -72,6 +72,7 @@ First, say hi to my dog Maui -- she's our shrimp for this project. She's not _ac
 
 
 Okay, back to the design, here it is:
+  
 <img width="700" alt="image" src="https://user-images.githubusercontent.com/9829937/197865130-39510d9c-4a64-45f8-82ca-5f41f9c0a22e.png">
 
 
