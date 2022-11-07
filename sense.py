@@ -12,7 +12,7 @@ GPIO.setup(echo,GPIO.IN)
 
 #Container & alerting config
 GRACE_PERIOD = 21600
-CONTAINER_LENGTH = 30
+CONTAINER_LENGTH = 30.6
 CRITICAL = 0.01
 ANOMALY = 5
 
@@ -37,11 +37,11 @@ def get_distance():
         pulse_end = time.time()
 
     pulse_duration = pulse_end - pulse_start
-    return (pulse_duration * 34300) / 2
+    return ((pulse_duration * 34300) / 2)
 
 
-def calculate_fullness(length=CONTAINER_LENGTH, distance):
-    return (1.0-(distance / length))
+def calculate_fullness(distance, length=CONTAINER_LENGTH):
+    return 1.0-(distance / length)
     
 
 #Execute alerting logic 
@@ -55,13 +55,13 @@ while True:
     time.sleep(2)
    
     distance = get_distance()
-    fullness = calculate_fullness(CONTAINER_LENGTH,distance)
+    fullness = calculate_fullness(distance, CONTAINER_LENGTH)
     
     #ignore any large changes in signal, e.g. when opening lid / feeding for an extended period of time 
     #change in food size is 1 cup every 12 hours, which should be less than 5cm between any two readings
     #don't care about distances becoming much smaller than 24cm
     if (distance - prev_distance) > ANOMALY:
-        print('Anomaly detected: distance measured at ', distance ,'while previous distance measured at ', prev_distance, '. \n Skipping measurement')
+        print('Anomaly detected: distance measured at ', distance ,'cm while previous distance measured at ', prev_distance, 'cm. \n Skipping measurement')
         continue
     
     #alert if feed distance container length and we haven't in the last 6 hours
@@ -72,15 +72,14 @@ while True:
         #handle case where first alert is within grace period... prob a better way to do this
         if alerted == False:
             alerts += 1
-            print('Threshold passed with current distance of ', distance, 'and a previous distance of ', prev_distance, '. Alert count: ', alerts)
             phone.send_alert_msg(client)
             hourglass = time_now
             alerted = True
             
         elif time_since_last_alert >= GRACE_PERIOD:
             alerts += 1
-            print('Threshold passed with current distance of ', distance, 'and a previous distance of ', prev_distance, '. Previous alert: ', time_since_last_alert, 'Alert count: ', alerts)
-            phone.send_alert_msg(client)
+            print('Threshold passed with current distance of ', round(distance,2), 'cm representing a hopper that is ', round(fullness*100,2),'% full. \n Sending WhatsApp alert')
+            phone.send_alert_msg(client,str(round(fullness*100,2)))
             hourglass = time_now
             
         elif time_since_last_alert <= GRACE_PERIOD:
@@ -88,6 +87,6 @@ while True:
             
     prev_distance = distance
     
-    print ("Feed measured at", distance, "cm, representing a hopper that is ", fullness*100,"% full.")
+    print ('Feed measured at', round(distance,2), 'cm, representing a hopper that is ', round(fullness*100,2),'% full.')
     
     
